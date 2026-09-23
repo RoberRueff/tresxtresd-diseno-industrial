@@ -101,8 +101,8 @@ a{color:inherit}
 .clients{padding-block:30px 60px;text-align:center}
 .clients .eyebrow{color:var(--muted)}
 .logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 18px;margin-top:18px}
-.logo-chip{display:flex;align-items:center;justify-content:center;height:52px;padding:0 18px;background:#fff;border-radius:4px}
-.logo-chip img{display:block;max-height:28px;max-width:110px;width:auto;height:auto;object-fit:contain}
+.logo-chip{display:flex;align-items:center;justify-content:center;height:168px;padding:0 28px;background:#fff;border-radius:8px}
+.logo-chip img{display:block;max-height:120px;max-width:260px;width:auto;height:auto;object-fit:contain}
 .logo-chip--text{font-family:var(--display);font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:#141a1f}
 
 /* section head */
@@ -124,6 +124,24 @@ a{color:inherit}
 .svc .tag{font:600 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 @media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:540px){.grid{grid-template-columns:1fr}}
+
+/* products carousel */
+.products{padding-block:40px 30px}
+.prod-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:28px}
+.prod-nav{display:flex;gap:10px;flex:none}
+.prod-nav button{width:44px;height:44px;border:1.5px solid var(--teal);background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.prod-nav button:hover{background:var(--teal);color:var(--ground)}
+.prod-nav button:disabled{opacity:.35;cursor:default}
+.prod-nav button:disabled:hover{background:transparent;color:var(--ink)}
+.prod-nav svg{width:18px;height:18px;fill:currentColor}
+.prod-track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*22px)/4);gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:2px}
+.prod-track::-webkit-scrollbar{display:none}
+.prod-item{scroll-snap-align:start;aspect-ratio:1/1;overflow:hidden;background:var(--surface);border:1px solid var(--line);position:relative}
+.prod-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.prod-item:hover img{transform:scale(1.05)}
+.prod-item span{position:absolute;inset-inline:0;bottom:0;padding:10px 12px;font:600 12px/1.3 var(--body);color:#fff;background:linear-gradient(0deg,rgba(6,14,20,.85),transparent)}
+@media (max-width:900px){.prod-track{grid-auto-columns:calc((100% - 22px)/2)}}
+@media (max-width:560px){.prod-track{grid-auto-columns:80%}}
 
 /* specs band */
 .band{position:relative;isolation:isolate;padding-block:110px;clip-path:polygon(0 12%,100% 0,100% 88%,0 100%);margin-block:10px}
@@ -299,7 +317,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section><section class="clients" aria-label="Clientes">
   <p class="eyebrow">Confiaron en nosotros</p>
-  <div class="logos"><span class="logo-chip"><img src="img/logos/netflix.png" alt="Netflix" loading="lazy"></span><span class="logo-chip"><img src="img/logos/cremolatti.webp" alt="Cremolatti Gelateria" loading="lazy"></span><span class="logo-chip logo-chip--text">Café Tortoni</span><span class="logo-chip logo-chip--text">Dragón Sushi</span><span class="logo-chip logo-chip--text">Cúrcuma Sushi &amp; Wok</span><span class="logo-chip logo-chip--text">Madero Tango</span></div>
+  <div class="logos"><span class="logo-chip"><img src="img/logos/Netflix-2.png" alt="Netflix" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Dragon-Sushi.png" alt="Dragón Sushi" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Curcuma-Sushi.png" alt="Cúrcuma Sushi &amp; Wok" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Cafe-Tortoni.png" alt="Café Tortoni" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Cremolatti.jpg" alt="Cremolatti Gelateria" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Madero-Tango.jpg" alt="Madero Tango" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Teruya-sushi.jpg" alt="Teruya Sushi" loading="lazy"></span><span class="logo-chip"><img src="img/logos/Fabric-Sushi.png" alt="Fabric Sushi" loading="lazy"></span></div>
   <p class="sector">Gastronomía, retail y oficinas de CABA y GBA</p>
 </section>
 <section class="biz">
@@ -317,6 +335,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="doors">
     <a class="door" href="diseno-industrial.html"><img src="img/laptop.webp" alt="" loading="lazy"><h3>Diseño industrial<br>a medida</h3><p>Diseño y modelado 3D de piezas y productos, desde tu idea, boceto o imagen.</p><span class="go">Ver diseño</span></a>
     <a class="door" href="impresion-3d.html"><img src="img/lattice.webp" alt="" loading="lazy"><h3>Impresión<br>3D</h3><p>Prototipos, maquetas y piezas impresas con el material justo para cada uso.</p><span class="go">Ver impresión 3D</span></a>
+  </div>
+</section><section class="products" aria-labelledby="productos">
+  <div class="wrap">
+    <div class="prod-head">
+      <div class="head" style="margin-bottom:0"><div class="spectrum"></div><h2 id="productos">Productos Tres x Tres D</h2></div>
+      <div class="prod-nav">
+        <button type="button" class="prod-prev" aria-label="Ver productos anteriores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.42 12l5.3 5.3a1 1 0 1 1-1.42 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.42 0Z"/></svg></button>
+        <button type="button" class="prod-next" aria-label="Ver más productos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.3 5.3a1 1 0 0 1 1.4 0l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4-1.4l5.3-5.3-5.3-5.3a1 1 0 0 1 0-1.4Z"/></svg></button>
+      </div>
+    </div>
+    <div class="prod-track">
+      <div class="prod-item"><img src="img/vase.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/lamp.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/gears.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/laptop.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/lattice.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/motor.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/estudio.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+      <div class="prod-item"><img src="img/hero.webp" alt="Producto Tres x Tres D — placeholder" loading="lazy"><span>Placeholder — foto real pendiente</span></div>
+    </div>
   </div>
 </section><section class="band" aria-labelledby="perf">
   <div class="wrap">
@@ -432,7 +470,23 @@ var TXT_CONFIG = {
     });
     box.querySelector('.s-again').addEventListener('click', function(){ f.reset(); ok.hidden = true; f.hidden = false; f.nombre.focus(); });
   }
-  window.TXT_init = function(root){ bindWa(document); bindForm(root); };
+  function bindCarousel(root){
+    root.querySelectorAll('.products').forEach(function(section){
+      var track = section.querySelector('.prod-track');
+      var prev = section.querySelector('.prod-prev'), next = section.querySelector('.prod-next');
+      if (!track) return;
+      function update(){
+        prev.disabled = track.scrollLeft <= 4;
+        next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      }
+      prev.addEventListener('click', function(){ track.scrollBy({left: -track.clientWidth, behavior: 'smooth'}); });
+      next.addEventListener('click', function(){ track.scrollBy({left: track.clientWidth, behavior: 'smooth'}); });
+      track.addEventListener('scroll', update);
+      window.addEventListener('resize', update);
+      update();
+    });
+  }
+  window.TXT_init = function(root){ bindWa(document); bindForm(root); bindCarousel(root); };
   window.TXT_init(document);
 })();
 </script>
