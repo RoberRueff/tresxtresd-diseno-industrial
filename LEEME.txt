@@ -1,0 +1,23 @@
+TRES X TRES D - Páginas para Google Ads
+========================================
+index.html              -> Inicio (grupo "Piezas y displays para locales" + Marca)
+diseno-industrial.html  -> Campaña 2 "Diseño industrial"
+impresion-3d.html       -> Campaña 1 "Impresión 3D"
+img/                    -> fotos PROVISORIAS (recortes de capturas): reemplazar por las originales, mismo nombre, formato .webp
+
+Antes de publicar, en cada HTML (bloque TXT_CONFIG al final):
+  whatsapp      número real, formato 54911XXXXXXXX
+  formEndpoint  URL que recibe el formulario. Vacío = no envía. Si empieza con "mailto:", abre
+                un borrador de mail en el cliente del visitante (no confiable, solo para probar).
+  adsLead       etiqueta de conversión del formulario (AW-XXXXXXXXX/xxxx)
+  adsWhatsapp   etiqueta de conversión del clic a WhatsApp
+Y pegar el fragmento del Google tag (gtag.js) donde lo indica el comentario en <head>.
+
+Los 3 HTML ya tienen formEndpoint apuntando a enviar.php (PHP mail(), manda a info@tresxtresd.com.ar) —
+subir enviar.php junto con los 3 HTML al hosting, si no está no funciona ninguno de los formularios.
+
+Eventos que se envían: generate_lead (formulario), whatsapp_click (cualquier botón de WhatsApp),
+también a dataLayer, por si usan Google Tag Manager.
+
+El sitio nuevo NO es WordPress — es HTML/CSS/JS estático, se sube tal cual al hosting (DonWeb),
+reemplazando al WordPress actual. enviar.php requiere que el hosting tenga PHP con mail() habilitado.
