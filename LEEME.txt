@@ -4,6 +4,8 @@ index.html              -> Inicio (grupo "Piezas y displays para locales" + Marc
 diseno-industrial.html  -> Campaña 2 "Diseño industrial"
 impresion-3d.html       -> Campaña 1 "Impresión 3D"
 img/                    -> fotos PROVISORIAS (recortes de capturas): reemplazar por las originales, mismo nombre, formato .webp
+                           Falta además una foto real de maqueta de arquitectura para el proyecto "Arquitectura"
+                           de diseno-industrial.html (hoy usa laptop.webp, marcado con comentario PENDIENTE).
 
 Antes de publicar, en cada HTML (bloque TXT_CONFIG al final):
   whatsapp      número real, formato 54911XXXXXXXX
