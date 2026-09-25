@@ -16,6 +16,7 @@ El sitio actual en producción es WordPress (tresxtresd.com.ar, sin acceso), per
 
 ## Reglas que no se rompen
 
+- Responder siempre en español.
 - Nunca inventar IDs de tracking, tokens ni credenciales — placeholder explícito si no está confirmado por el usuario.
 - Nunca usar `3x3d.com.ar` en ningún link o ejemplo (SSL vencido).
 - Nunca mostrar tarifario ni rango de precio en sitio o anuncios — el precio lo confirma un diseñador después de contactar por WhatsApp o formulario.
