@@ -368,6 +368,14 @@
       grid-column: 1/-1
     }
 
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden
+    }
+
     .field-row {
       display: grid;
       grid-template-columns: 1fr 120px;
@@ -1411,7 +1419,7 @@
             <ul>
               <li>Diseño + impresión en un mismo estudio</li>
               <li>Impresión en hasta 4 colores</li>
-              <li>Piezas de hasta un metro de altura, ensambladas y pulidas</li>
+              <li>Piezas de hasta 40 cm de altura en una sola pieza</li>
               <li>Presupuesto sin cargo por formulario o WhatsApp</li>
             </ul>
             <div class="hero-actions">
@@ -1424,6 +1432,10 @@
           </div>
           <div class="quote" id="cotizar">
             <form class="qform" novalidate>
+              <!-- antispam: campo trampa invisible (los robots lo completan) + segundos hasta enviar -->
+              <div class="hp" aria-hidden="true"><label for="f-hp">No completar</label><input id="f-hp" name="sitio_alt"
+                  tabindex="-1" autocomplete="off"></div>
+              <input type="hidden" name="tiempo" value="">
               <h2>Pedí tu presupuesto</h2>
               <p class="sub">Sin cargo y sin compromiso. Un diseñador revisa tu proyecto y te confirma el precio por
                 WhatsApp o email — no tenemos tarifario fijo, cada pieza es a medida.</p>
@@ -1687,7 +1699,7 @@
       function bindForm(root) {
         var box = root.querySelector('.quote'); if (!box) return;
         var f = box.querySelector('form'), ok = box.querySelector('.sent');
-        var orEl = f.querySelector('.or'), orTxt = orEl.textContent;
+        var orEl = f.querySelector('.or'), orTxt = orEl.textContent, t0 = Date.now();
         var rules = {
           nombre: function (v) { return v.trim().length > 1 || 'Ingresá tu nombre.'; },
           email: function (v) { return /^\S+@\S+\.\S+$/.test(v) || 'Revisá el correo: falta el @ o el dominio.'; },
@@ -1718,11 +1730,20 @@
             return;
           }
           btn.disabled = true; btn.textContent = 'Enviando…'; orEl.textContent = orTxt;
+          f.tiempo.value = Math.round((Date.now() - t0) / 1000);
           fetch(TXT_CONFIG.formEndpoint, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } })
-            .then(function (r) { if (!r.ok) throw 0; done(); })
-            .catch(function () {
+            .then(function (r) {
+              if (r.ok) return done();
+              return r.json().catch(function () { return {}; }).then(function (d) { throw d.error; });
+            })
+            .catch(function (e) {
               btn.disabled = false; btn.textContent = 'Enviar consulta';
-              orEl.textContent = 'No se pudo enviar. Probá de nuevo o escribinos por WhatsApp.';
+              if (e === 'email_dominio') {
+                f.email.parentNode.querySelector('.err').textContent = 'Ese dominio de correo no existe. Revisalo.';
+                f.email.setAttribute('aria-invalid', 'true'); f.email.focus();
+              } else {
+                orEl.textContent = 'No se pudo enviar. Probá de nuevo o escribinos por WhatsApp.';
+              }
             });
         });
         box.querySelector('.s-again').addEventListener('click', function () { f.reset(); var b = f.querySelector('button[type=submit]'); b.disabled = false; b.textContent = 'Enviar consulta'; orEl.textContent = orTxt; ok.hidden = true; f.hidden = false; f.nombre.focus(); });

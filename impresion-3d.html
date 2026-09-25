@@ -2,15 +2,6 @@
 <html lang="es">
 
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZED42MZ33"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-3ZED42MZ33');
-  </script>
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
       w[l] = w[l] || []; w[l].push({
@@ -25,7 +16,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Impresión 3D a medida para empresas en CABA | Tres x Tres D</title>
   <meta name="description"
-    content="Impresión 3D de prototipos, maquetas y piezas a medida, hasta 4 colores y hasta un metro de altura. CABA y GBA. Pedí tu presupuesto.">
+    content="Impresión 3D de prototipos, maquetas y piezas a medida, hasta 4 colores y hasta 40 cm de altura. CABA y GBA. Pedí tu presupuesto.">
   <link rel="icon" type="image/png" href="img/logo.png">
   <!-- Google tag (gtag.js) de Google Ads / GA4: pegar acá el fragmento que da Google Ads (AW-XXXXXXXXX) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -368,6 +359,14 @@
 
     .field--full {
       grid-column: 1/-1
+    }
+
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden
     }
 
     .field-row {
@@ -1302,7 +1301,7 @@
             <ul>
               <li>Prototipos para evaluar forma, función y viabilidad</li>
               <li>Maquetas de arquitectura</li>
-              <li>Hasta 4 colores y hasta un metro de altura</li>
+              <li>Hasta 4 colores y hasta 40 cm de altura</li>
               <li>Cotizamos desde tu archivo, plano o foto</li>
             </ul>
             <div class="hero-actions">
@@ -1315,6 +1314,10 @@
           </div>
           <div class="quote" id="cotizar">
             <form class="qform" novalidate>
+              <!-- antispam: campo trampa invisible (los robots lo completan) + segundos hasta enviar -->
+              <div class="hp" aria-hidden="true"><label for="f-hp">No completar</label><input id="f-hp" name="sitio_alt"
+                  tabindex="-1" autocomplete="off"></div>
+              <input type="hidden" name="tiempo" value="">
               <h2>Pedí tu presupuesto</h2>
               <p class="sub">Sin cargo y sin compromiso. Un diseñador revisa tu proyecto y te confirma el precio por
                 WhatsApp o email — no tenemos tarifario fijo, cada pieza es a medida.</p>
@@ -1400,8 +1403,8 @@
               <figure><img src="img/lamp.webp" alt="Lámpara y maceta impresas en 3D" loading="lazy"></figure>
               <div><span class="tag">Arte &amp; diseño</span>
                 <h3>Arte &amp; deco</h3>
-                <p>Llevá tus figuras, objetos o piezas a nuevas alturas. Hemos realizado trabajos de hasta un metro de
-                  altura, imprimiendo, ensamblando y puliendo.</p>
+                <p>Llevá tus figuras, objetos y piezas de deco al 3D: imprimimos hasta 40 cm en una sola pieza, con
+                  terminación pulida.</p>
               </div>
             </article>
           </div>
@@ -1513,7 +1516,7 @@
       function bindForm(root) {
         var box = root.querySelector('.quote'); if (!box) return;
         var f = box.querySelector('form'), ok = box.querySelector('.sent');
-        var orEl = f.querySelector('.or'), orTxt = orEl.textContent;
+        var orEl = f.querySelector('.or'), orTxt = orEl.textContent, t0 = Date.now();
         var rules = {
           nombre: function (v) { return v.trim().length > 1 || 'Ingresá tu nombre.'; },
           email: function (v) { return /^\S+@\S+\.\S+$/.test(v) || 'Revisá el correo: falta el @ o el dominio.'; },
@@ -1544,11 +1547,20 @@
             return;
           }
           btn.disabled = true; btn.textContent = 'Enviando…'; orEl.textContent = orTxt;
+          f.tiempo.value = Math.round((Date.now() - t0) / 1000);
           fetch(TXT_CONFIG.formEndpoint, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } })
-            .then(function (r) { if (!r.ok) throw 0; done(); })
-            .catch(function () {
+            .then(function (r) {
+              if (r.ok) return done();
+              return r.json().catch(function () { return {}; }).then(function (d) { throw d.error; });
+            })
+            .catch(function (e) {
               btn.disabled = false; btn.textContent = 'Enviar consulta';
-              orEl.textContent = 'No se pudo enviar. Probá de nuevo o escribinos por WhatsApp.';
+              if (e === 'email_dominio') {
+                f.email.parentNode.querySelector('.err').textContent = 'Ese dominio de correo no existe. Revisalo.';
+                f.email.setAttribute('aria-invalid', 'true'); f.email.focus();
+              } else {
+                orEl.textContent = 'No se pudo enviar. Probá de nuevo o escribinos por WhatsApp.';
+              }
             });
         });
         box.querySelector('.s-again').addEventListener('click', function () { f.reset(); var b = f.querySelector('button[type=submit]'); b.disabled = false; b.textContent = 'Enviar consulta'; orEl.textContent = orTxt; ok.hidden = true; f.hidden = false; f.nombre.focus(); });
