@@ -1,7 +1,12 @@
 # Forzar HTTPS
+# Chequea también X-Forwarded-Proto: si el hosting termina el SSL en un proxy por delante de
+# Apache, %{HTTPS} solo puede verse "off" aunque el visitante esté en https — sin este chequeo
+# la regla redirige TODO, incluido el POST del formulario (que el navegador repite como GET
+# y pierde los datos, rompiendo el envío).
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
